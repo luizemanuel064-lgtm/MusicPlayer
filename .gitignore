@@ -1,0 +1,20 @@
+# --- Banco de Dados Local ---
+# Não envie seus dados de teste nem as senhas dos seus usuários locais
+musicpoo.db
+
+# --- Arquivos de Configuração / Segredos ---
+# Contém as suas chaves e senhas do sistema
+.env
+
+# --- Arquivos do Python ---
+# Pastas geradas automaticamente pelo Python que só poluem o repositório
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Ambiente Virtual ---
+# Se você usa venv, mkvirtualenv, etc., ignore a pasta do ambiente
+.venv/
+venv/
+env/

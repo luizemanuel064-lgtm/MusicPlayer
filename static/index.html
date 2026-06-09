@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MusicPOO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="bg-blobs" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <div id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-logo">M<span>.</span></div>
+      <p class="auth-tagline">Sua música, seu jeito.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-form="login">Entrar</button>
+        <button class="auth-tab" data-form="register">Cadastrar</button>
+      </div>
+
+      <div id="form-login" class="auth-form">
+        <div class="field">
+          <label>E-mail</label>
+          <input id="l-email" type="email" placeholder="seu@email.com" autocomplete="email"/>
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <input id="l-pass" type="password" placeholder="••••••••" autocomplete="current-password"/>
+        </div>
+        <p class="auth-err" id="l-err"></p>
+        <button class="auth-btn" id="btn-login">Entrar</button>
+      </div>
+
+      <div id="form-register" class="auth-form is-hidden">
+        <div class="field">
+          <label>Nome de usuário</label>
+          <input id="r-user" type="text" placeholder="ex: djfuria" autocomplete="username"/>
+        </div>
+        <div class="field">
+          <label>E-mail</label>
+          <input id="r-email" type="email" placeholder="seu@email.com" autocomplete="email"/>
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <input id="r-pass" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password"/>
+        </div>
+        <p class="auth-err" id="r-err"></p>
+        <button class="auth-btn" id="btn-register">Criar conta</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="app" class="layout is-hidden">
+
+    <aside class="sidebar">
+      <div class="logo">M<span>.</span></div>
+
+      <div class="cover-stage">
+        <div class="cover-glow" id="cover-glow"></div>
+        <img id="player-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" alt="capa"/>
+        <div class="vinyl-ring" id="vinyl"></div>
+      </div>
+
+      <div class="now-info">
+        <p class="now-title" id="now-title">Nenhuma faixa</p>
+        <p class="now-artist" id="now-artist">—</p>
+      </div>
+
+      <div class="prog-row">
+        <span id="t-cur">0:00</span>
+        <div class="prog-track" id="prog-track">
+          <div class="prog-fill" id="prog-fill"></div>
+          <div class="prog-thumb" id="prog-thumb"></div>
+        </div>
+        <span id="t-tot">0:30</span>
+      </div>
+
+      <div class="ctrl-row">
+        <button class="ctrl-btn" id="btn-prev" title="Anterior">
+          <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+        </button>
+        <button class="ctrl-btn play-btn" id="btn-play" title="Play / Pause">
+          <svg class="ico-play"  viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="ico-pause is-hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <button class="ctrl-btn" id="btn-next" title="Próxima">
+          <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm2-8.14 5.02 2.14L8 14.14V9.86zM16 6h2v12h-2z"/></svg>
+        </button>
+      </div>
+
+      <div class="vol-row">
+        <svg class="vol-ico" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+        <div class="vol-track">
+          <div class="vol-fill u-w80" id="vol-fill"></div>
+        <input type="range" id="volume" min="0" max="100" value="80" class="vol-range" aria-label="Controle de volume"/>
+      </div>
+
+      <div class="pl-section">
+        <div class="pl-header">
+          <span>Playlists</span>
+          <button id="btn-new-pl" title="Nova playlist">+</button>
+        </div>
+        <div id="pl-list" class="pl-list"></div>
+      </div>
+
+      <div class="user-row">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <span class="user-name" id="user-name">—</span>
+        <button id="btn-logout" title="Sair">
+          <svg viewBox="0 0 24 24" width="16" height="16" class="logout-ico">
+            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+          </svg>
+        </button>
+      </div>
+
+      <audio id="audio" preload="none"></audio>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="search-pill">
+          <svg viewBox="0 0 24 24" class="search-ico"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          <input id="search-input" type="text" placeholder="Artista, música, álbum…" autocomplete="off" spellcheck="false"/>
+          <button id="btn-search">Buscar</button>
+        </div>
+        <div class="tab-row">
+          <button class="tab active" data-tab="chart">🔥 Charts</button>
+          <button class="tab" data-tab="recent">⏱ Recentes</button>
+          <button class="tab is-hidden" data-tab="playlist" id="tab-pl">🎵 <span id="tab-pl-name">Playlist</span></button>
+        </div>
+      </header>
+
+      <div class="grid-header">
+        <h2 id="grid-label">Top Charts Global</h2>
+        <span id="grid-count"></span>
+      </div>
+
+      <div id="track-list" class="track-list"></div>
+    </main>
+
+    <div id="modal-add" class="modal-overlay is-hidden">
+      <div class="modal">
+        <h3>Adicionar à playlist</h3>
+        <div id="modal-pl-list" class="modal-pl-list"></div>
+        <button class="modal-close" id="modal-close">Cancelar</button>
+      </div>
+    </div>
+
+  </div><script src="app.js"></script>
+</body>
+</html>
